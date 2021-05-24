@@ -1,5 +1,5 @@
 import boto3
-
+#boto3 this lib is called aws sdk
 
 def lambda_handler(event, context):
 
@@ -10,12 +10,12 @@ def lambda_handler(event, context):
         'SlaveInstanceType': 'm3.xlarge',
         'InstanceCount': 2,
         'InstanceGroups': [],
-        'Ec2KeyName': 'spark',
+        'Ec2KeyName': 'test',
         'KeepJobFlowAliveWhenNoSteps': True,
         'TerminationProtected': False,
-        'Ec2SubnetId': 'subnet-b51b2fd3',
-        'EmrManagedMasterSecurityGroup': 'sg-00e712ec1b09f676e',
-        'EmrManagedSlaveSecurityGroup':  'sg-0e9ebbfd18d0669a8'
+        'Ec2SubnetId': 'subnet-f7062dbf',
+        'EmrManagedMasterSecurityGroup': 'sg-02bcc0ab2cfb529e8',
+        'EmrManagedSlaveSecurityGroup':  'sg-0c7dbbb2d6be9e74f'
     }
 
     configurations = [
@@ -41,8 +41,8 @@ def lambda_handler(event, context):
 
     response = client.run_job_flow(
         Name='PySpark Cluster',
-        LogUri='s3://aws-logs-788660014500-eu-west-1/emr-logs',
-        ReleaseLabel='emr-5.30.0',
+        LogUri='s3://vinaysbt/emr-logs',
+        ReleaseLabel='emr-5.33.0',
         Instances=instances,
         Configurations=configurations,
         Steps=[],
