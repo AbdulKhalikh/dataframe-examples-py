@@ -1,6 +1,5 @@
 s3_conf:
-  s3_bucket: vinaysbt
-
+  s3_bucket: test-tushar-test
 
 sftp_conf:
     filetype: csv
