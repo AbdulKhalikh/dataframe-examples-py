@@ -11,9 +11,14 @@ if __name__ == '__main__':
     spark = SparkSession \
         .builder \
         .appName("DataFrames examples") \
-        .config('spark.jars.packages', 'org.apache.hadoop:hadoop-aws:2.7.4') \
-        .master('local[*]') \
         .getOrCreate()
+
+    #spark = SparkSession \
+    #    .builder \
+    #    .appName("DataFrames examples") \
+    #    .config('spark.jars.packages', 'org.apache.hadoop:hadoop-aws:2.7.4') \
+    #    .master('local[*]') \
+    #    .getOrCreate()
 
     spark.sparkContext.setLogLevel("ERROR")
     current_dir = os.path.abspath(os.path.dirname(__file__))
@@ -77,3 +82,4 @@ if __name__ == '__main__':
     txnAggDf.show(5, False)
 
 # spark-submit --packages "org.apache.hadoop:hadoop-aws:2.7.4" dataframe/ingestion/rdd/rdd2df_thru_explicit_schema.py
+# spark-submit --packages "org.apache.hadoop:hadoop-aws:2.7.4" --master yarn dataframe/ingestion/rdd/rdd2df_thru_explicit_schema.py
