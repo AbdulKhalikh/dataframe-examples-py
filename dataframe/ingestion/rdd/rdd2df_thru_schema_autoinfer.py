@@ -1,4 +1,4 @@
-from pyspark.sql import SparkSession,Row
+from pyspark.sql import SparkSession, Row
 import os.path
 import yaml
 
@@ -8,8 +8,13 @@ if __name__ == '__main__':
         .builder \
         .appName("DataFrames examples") \
         .config('spark.jars.packages', 'org.apache.hadoop:hadoop-aws:2.7.4') \
-        .master('local[*]') \
         .getOrCreate()
+    #spark = SparkSession \
+    #    .builder \
+    #    .appName("DataFrames examples") \
+    #    .config('spark.jars.packages', 'org.apache.hadoop:hadoop-aws:2.7.4') \
+    #    .master('local[*]') \
+    #    .getOrCreate()
 
     spark.sparkContext.setLogLevel("ERROR")
     current_dir = os.path.abspath(os.path.dirname(__file__))
@@ -51,3 +56,4 @@ if __name__ == '__main__':
     txnDfWithColName.show(5, False)
 
 # spark-submit --packages "org.apache.hadoop:hadoop-aws:2.7.4" dataframe/ingestion/rdd/rdd2df_thru_schema_autoinfer.py
+# spark-submit --packages "org.apache.hadoop:hadoop-aws:2.7.4" --master yarn dataframe/ingestion/rdd/rdd2df_thru_schema_autoinfer.py
