@@ -7,7 +7,6 @@ if __name__ == '__main__':
     spark = SparkSession \
         .builder \
         .appName("DataFrames examples") \
-        .master('local[*]') \
         .config('spark.jars.packages', 'com.springml:spark-sftp_2.11:1.1.1') \
         .getOrCreate()
     spark.sparkContext.setLogLevel('ERROR')
