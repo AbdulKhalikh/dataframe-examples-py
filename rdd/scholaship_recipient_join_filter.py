@@ -7,6 +7,7 @@ if __name__ == '__main__':
 
     os.environ["PYSPARK_SUBMIT_ARGS"] = (
         '--packages "org.apache.hadoop:hadoop-aws:2.7.4" pyspark-shell'
+        # org.apache.hadoop:hadoop-aws:2.7.4 => used to read and write data from aws s3
     )
 
     # Create the SparkSession
@@ -15,18 +16,19 @@ if __name__ == '__main__':
         .appName("RDD examples") \
         .master('local[*]') \
         .getOrCreate()
-    spark.sparkContext.setLogLevel('ERROR')
+    spark.sparkContext.setLogLevel('ERROR') # used to see error logs not all logs like warn etc..
 
-    current_dir = os.path.abspath(os.path.dirname(__file__))
-    app_config_path = os.path.abspath(current_dir + "/../" + "application.yml")
-    app_secrets_path = os.path.abspath(current_dir + "/../" + ".secrets")
+    current_dir = os.path.abspath(os.path.dirname(__file__)) # current file(scholarship_re_join_filter) path stored in current_dir variable
+    app_config_path = os.path.abspath(current_dir + "/../" + "application.yml") # application yml path
+    app_secrets_path = os.path.abspath(current_dir + "/../" + ".secrets") # secrets file path programmatically
 
-    conf = open(app_config_path)
-    app_conf = yaml.load(conf, Loader=yaml.FullLoader)
-    secret = open(app_secrets_path)
-    app_secret = yaml.load(secret, Loader=yaml.FullLoader)
+    conf = open(app_config_path) # conf is file object point to yml path
+    app_conf = yaml.load(conf, Loader=yaml.FullLoader) # app_conf contains data of yml file in key value pairs
+    secret = open(app_secrets_path) # secret is file object point to secrets path
+    app_secret = yaml.load(secret, Loader=yaml.FullLoader) # app_secret contains data of secrets file in key value pairs
 
     # Setup spark to use s3
+    # setting and access the  access key and secrets key (test.pem), app_secret is a key value pair , app_secret["s3_conf"]["access_key"] - used to read data
     hadoop_conf = spark.sparkContext._jsc.hadoopConfiguration()
     hadoop_conf.set("fs.s3a.access.key", app_secret["s3_conf"]["access_key"])
     hadoop_conf.set("fs.s3a.secret.key", app_secret["s3_conf"]["secret_access_key"])
